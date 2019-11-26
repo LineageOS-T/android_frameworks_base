@@ -2867,4 +2867,7 @@
 
     <!-- Content description for priority mode icon on dream [CHAR LIMIT=NONE] -->
     <string name="priority_mode_dream_overlay_content_description">Priority mode on</string>
+
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">Switch mobile data SIM</string>
 </resources>

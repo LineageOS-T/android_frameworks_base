@@ -7440,5 +7440,10 @@ message MetricsEvent {
 
     // LINEAGE Metrics
     LINEAGE_QS_TILES = 4000;
+
+    // OPEN: QS Data switch tile shown
+    // ACTION: QS Data switch tile tapped
+    // CATEGORY: QUICK_SETTINGS
+    QS_DATA_SWITCH = 1938;
   }
 }

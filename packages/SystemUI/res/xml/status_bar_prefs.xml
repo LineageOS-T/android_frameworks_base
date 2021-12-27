@@ -77,6 +77,11 @@
         android:title="@string/volume_ringer_status_silent" />
 
     <com.android.systemui.tuner.StatusBarSwitch
+	android:icon="@drawable/ic_statusbar_callstrength"
+        android:key="call_strength"
+        android:title="@string/status_bar_call_strength" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
         android:icon="@drawable/ic_statusbar_vibrate"
         android:key="volume"
         android:title="@string/volume_ringer_status_vibrate" />

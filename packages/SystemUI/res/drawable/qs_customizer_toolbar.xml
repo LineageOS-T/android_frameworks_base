@@ -17,5 +17,6 @@
     xmlns:priv-android="http://schemas.android.com/apk/prv/res/android">
     <shape>
         <solid android:color="@android:color/transparent"/>
+        <corners android:radius="?android:attr/dialogCornerRadius" />
     </shape>
 </inset>

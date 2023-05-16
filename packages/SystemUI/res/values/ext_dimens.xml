@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2014 The Android Open Source Project
+<!--
+     Copyright (C) 2022 SuperiorOS
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,10 +14,11 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<inset xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:priv-android="http://schemas.android.com/apk/prv/res/android">
-    <shape>
-        <solid android:color="?attr/underSurfaceColor"/>
-        <corners android:radius="?android:attr/dialogCornerRadius" />
-    </shape>
-</inset>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+     <!-- QS Paddings -->
+    <dimen name="custom_qs_panel_padding_top">0dp</dimen>
+    <dimen name="custom_notification_row_padding">16dp</dimen>
+    <dimen name="custom_qs_tile_label_line_height">20sp</dimen>
+
+ </resources>

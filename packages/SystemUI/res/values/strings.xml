@@ -2885,4 +2885,7 @@
 
     <!-- DataSwitch Tile -->
     <string name="qs_data_switch_label">Switch mobile data SIM</string>
+
+    <!-- Face unlock -->
+    <string name="face_unlock_recognizing">Recognizing face...</string>
 </resources>

@@ -248,10 +248,10 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.SHOW_FOURG_ICON), false,
+                    Settings.System.getUriFor(Settings.System.SHOW_FOURG_ICON), true,
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.DATA_DISABLED_ICON), false,
+                    Settings.System.getUriFor(Settings.System.DATA_DISABLED_ICON), true,
                     this, UserHandle.USER_ALL);
             updateSettings();
         }

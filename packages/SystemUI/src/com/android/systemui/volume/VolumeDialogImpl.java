@@ -268,6 +268,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     private ImageButton mSettingsIcon;
     private View mAppVolumeView;
     private ImageButton mAppVolumeIcon;
+    private String mAppVolumeActivePackageName;
     private View mExpandRowsView;
     private ExpandableIndicator mExpandRows;
     private FrameLayout mZenIcon;
@@ -746,9 +747,6 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
 
         mRoundedBorderBottom = mDialog.findViewById(R.id.rounded_border_bottom);
 
-        mAppVolumeView = mDialog.findViewById(R.id.app_volume_container);
-        mAppVolumeIcon = mDialog.findViewById(R.id.app_volume);
-
         mExpandRowsView = mDialog.findViewById(R.id.expandable_indicator_container);
         mExpandRows = mDialog.findViewById(R.id.expandable_indicator);
 
@@ -781,6 +779,9 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
 
             mExpandRows.setRotation(-90);
         }
+
+        mAppVolumeView = mDialog.findViewById(R.id.app_volume_container);
+        mAppVolumeIcon = mDialog.findViewById(R.id.app_volume);
 
         if (mRows.isEmpty()) {
             if (!AudioSystem.isSingleVolume(mContext)) {
@@ -1416,15 +1417,31 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     private boolean shouldShowAppVolume() {
         ContentResolver cr = mContext.getContentResolver();
         int showAppVolume = Settings.System.getInt(cr, Settings.System.SHOW_APP_VOLUME, 0);
-        if (showAppVolume == 1) {
+        boolean ret = showAppVolume == 1;
+        mAppVolumeActivePackageName = null;
+        if (ret) {
+            ret = false;
             AudioManager audioManager = mController.getAudioManager();
             for (AppVolume av : audioManager.listAppVolumes()) {
                 if (av.isActive()) {
-                    return true;
+                    ret = true;
+                    mAppVolumeActivePackageName = av.getPackageName();
+                    break;
                 }
             }
         }
-        return false;
+        return ret;
+    }
+
+    private Drawable getApplicationIcon(String packageName) {
+        PackageManager pm = mContext.getPackageManager();
+        Drawable icon = null;
+        try {
+            icon = pm.getApplicationIcon(packageName);
+        } catch (Exception e) {
+            // nothing to do
+        }
+        return icon;
     }
 
     public void initAppVolumeH() {
@@ -1440,6 +1457,13 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 Dependency.get(ActivityStarter.class).startActivity(intent,
                         true /* dismissShade */);
             });
+            Drawable icon = mAppVolumeActivePackageName != null ?
+                    getApplicationIcon(mAppVolumeActivePackageName) : null;
+            if (icon != null) {
+                mAppVolumeIcon.setImageTintList(null);
+                mAppVolumeIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                mAppVolumeIcon.setImageDrawable(icon);
+            }
         }
     }
 

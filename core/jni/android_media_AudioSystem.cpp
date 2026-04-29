@@ -24,10 +24,10 @@
 #include <android_os_Parcel.h>
 #include <audiomanager/AudioManager.h>
 #include <jni.h>
-#include <media/AppVolume.h>
 #include <media/AudioContainers.h>
 #include <media/AudioPolicy.h>
 #include <media/AudioSystem.h>
+#include <media/AppVolume.h>
 #include <media/MicrophoneInfo.h>
 #include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedLocalRef.h>
@@ -48,6 +48,9 @@
 #include "android_media_MicrophoneInfo.h"
 #include "android_util_Binder.h"
 #include "core_jni_helpers.h"
+
+static jclass gAppVolumeClass;
+static jmethodID gAppVolumeCstor;
 
 // ----------------------------------------------------------------------------
 
@@ -193,9 +196,6 @@ static struct {
 
 static jclass gAudioDescriptorClass;
 static jmethodID gAudioDescriptorCstor;
-
-static jclass gAppVolumeClass;
-static jmethodID gAppVolumeCstor;
 
 //
 // JNI Initialization for OpenSLES routing
@@ -852,8 +852,7 @@ static jint
 android_media_AudioSystem_setAppVolume(JNIEnv *env, jobject thiz, jstring packageName, jfloat value)
 {
     const jchar* c_packageName = env->GetStringCritical(packageName, 0);
-    String8 package8 = String8(reinterpret_cast<const char16_t*>(c_packageName),
-                                    env->GetStringLength(packageName));
+    String8 package8 = String8(reinterpret_cast<const char16_t*>(c_packageName), env->GetStringLength(packageName));
     env->ReleaseStringCritical(packageName, c_packageName);
     return (jint) check_AudioSystem_Command(AudioSystem::setAppVolume(package8, value));
 }
@@ -862,8 +861,7 @@ static jint
 android_media_AudioSystem_setAppMute(JNIEnv *env, jobject thiz, jstring packageName, jboolean mute)
 {
     const jchar* c_packageName = env->GetStringCritical(packageName, 0);
-    String8 package8 = String8(reinterpret_cast<const char16_t*>(c_packageName),
-                                    env->GetStringLength(packageName));
+    String8 package8 = String8(reinterpret_cast<const char16_t*>(c_packageName), env->GetStringLength(packageName));
     env->ReleaseStringCritical(packageName, c_packageName);
     return (jint) check_AudioSystem_Command(AudioSystem::setAppMute(package8, mute));
 }
@@ -3194,7 +3192,7 @@ static const JNINativeMethod gMethods[] =
          {"getDirectProfilesForAttributes",
           "(Landroid/media/AudioAttributes;Ljava/util/ArrayList;)I",
           (void *)android_media_AudioSystem_getDirectProfilesForAttributes},
-         {"setAppVolume", "(Ljava/lang/String;F)I",
+          {"setAppVolume", "(Ljava/lang/String;F)I",
           (void *)android_media_AudioSystem_setAppVolume},
          {"setAppMute", "(Ljava/lang/String;Z)I",
           (void *)android_media_AudioSystem_setAppMute},
